@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Certificate Details{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Certificate Details</h1>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+            {{ form.common_name.label(class="form-control-label") }}
+            {{ form.common_name(class="form-control") }}
+            {% for error in form.common_name.errors %}
+                <div class="invalid-feedback d-block">{{ error }}</div>
+            {% endfor %}
+        </div>
+        <div class="form-group">
+            {{ form.creation_date.label(class="form-control-label") }}
+            {{ form.creation_date(class="form-control") }}
+            {% for error in form.creation_date.errors %}
+                <div class="invalid-feedback d-block">{{ error }}</div>
+            {% endfor %}
+        </div>
+        <div class="form-group">
+            {{ form.valid_to_date.label(class="form-control-label") }}
+            {{ form.valid_to_date(class="form-control") }}
+            {% for error in form.valid_to_date.errors %}
+                <div class="invalid-feedback d-block">{{ error }}</div>
+            {% endfor %}
+        </div>
+        <div class="form-group">
+            {{ form.comments.label(class="form-control-label") }}
+            {{ form.comments(class="form-control") }}
+            {% for error in form.comments.errors %}
+                <div class="invalid-feedback d-block">{{ error }}</div>
+            {% endfor %}
+        </div>
+        <div class="form-group">
+            {{ form.zip_password.label(class="form-control-label") }}
+            <input type="text" name="zip_password" value="{{ certificate.zip_password }}" class="form-control">
+            {% for error in form.zip_password.errors %}
+                <div class="invalid-feedback d-block">{{ error }}</div>
+            {% endfor %}
+        </div>
+        <div class="form-group">
+            {{ form.pfx_password.label(class="form-control-label") }}
+            <input type="text" name="pfx_password" value="{{ certificate.pfx_password }}" class="form-control">
+            {% for error in form.pfx_password.errors %}
+                <div class="invalid-feedback d-block">{{ error }}</div>
+            {% endfor %}
+        </div>
+        {{ form.submitedit(class="btn btn-primary") }}
+    </form>
+    <a href="{{ url_for('delete_certificate', id=certificate.id) }}" class="btn btn-danger mt-3" onclick="return confirm('Are you sure you want to delete this certificate?')">Delete Certificate</a>
+</div>
+{% endblock %}

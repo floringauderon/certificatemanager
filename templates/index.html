@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}All Certificates{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>Welcome, {{ username }}!</h1>
+
+    <h2>Your saved Certificates</h2>
+
+    {% if certificates %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Common Name</th>
+                    <th>Creation Date</th>
+                    <th>Valid To Date</th>
+                    <th>Comments</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for certificate in certificates %}
+                    <tr>
+                        <td>{{ certificate.common_name }}</td>
+                        <td>{{ certificate.creation_date }}</td>
+                        <td>{{ certificate.valid_to_date }}</td>
+                        <td>{{ certificate.comments }}</td>
+                        <td><a href="{{ url_for('certificate', id=certificate.id) }}" class="btn btn-sm btn-primary">View / Edit</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p class="text-center">I am sorry but you haven't uploaded any certificates yet.</p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Common Name</th>
+                    <th>Creation Date</th>
+                    <th>Valid To Date</th>
+                    <th>Comments</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    {% endif %}
+
+    <div class="text-center mt-3">
+        <a href="{{ url_for('add_certificate') }}" class="btn btn-success">Add Certificate</a>
+        <a href="{{ url_for('logout') }}" class="btn btn-secondary">Logout</a>
+    </div>
+</div>
+{% endblock %}
