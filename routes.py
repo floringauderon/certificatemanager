@@ -1,5 +1,5 @@
 # routes.py
-from flask import render_template, redirect, url_for, flash, request
+from flask import render_template, redirect, url_for, flash, request, jsonify
 from flask_login import login_user, logout_user, login_required, current_user
 from . import app, db, forms, models
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -103,6 +103,26 @@ def delete_certificate(id):
     db.session.commit()
     flash('Aaaand he gone - Certificate deleted successfully!', 'success')
     return redirect(url_for('index'))
+
+@app.route('/api/next_cert_to_expire', methods=['GET'])
+@login_required
+def next_cert_to_expire():
+    next_cert = models.Certificate.query.order_by(models.Certificate.valid_to_date.asc()).first()
+
+    if next_cert:
+        cert_data = {
+            'id': next_cert.id,
+            'valid_to_date': next_cert.valid_to_date.isoformat(),
+            'user_id': next_cert.user_id,
+        }
+        return jsonify(cert_data)
+    else:
+        return jsonify({'message': 'No certificates found'}), 404
+
+@app.route('/api/amount_of_certs', methods=['GET'])
+def certificate_count():
+    count = models.Certificate.query.count()
+    return jsonify({'amount_of_certs': count})
 
 @app.route('/logout')
 @login_required
