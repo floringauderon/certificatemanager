@@ -26,7 +26,7 @@
                         <td>{{ certificate.creation_date }}</td>
                         <td>{{ certificate.valid_to_date }}</td>
                         <td>{{ certificate.comments }}</td>
-                        <td><a href="{{ url_for('certificate', id=certificate.id) }}" class="btn btn-sm btn-primary">View / Edit</a></td>
+                        <td><a href="{{ url_for('certificate', id=certificate.id) }}" class="btn btn-sm btn-dark">More Info</a></td>
                     </tr>
                 {% endfor %}
             </tbody>
