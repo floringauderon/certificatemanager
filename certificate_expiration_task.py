@@ -1,13 +1,15 @@
 # certificate_expiration_task.py
 import sendgrid
 from sendgrid.helpers.mail import Mail
-from mysite import app, db, models, SENDGRID_API_KEY # adjust import to your project
+import sys
+sys.path.append('/home/flogau/mysite')
+from mysite import app, db, models, SENDGRID_API_KEY
 import datetime
 
 def send_certificate_expiration_email(certificate, user_email):
     sg = sendgrid.SendGridAPIClient(SENDGRID_API_KEY)
     message = Mail(
-        from_email=app.config['MAIL_DEFAULT_SENDER'],
+        from_email='certificate-manager@gmail.com',
         to_emails=user_email,
         subject="Certificate Expiration Notification",
         html_content=f"Your certificate '{certificate.common_name}' is expiring in 30 days. Please take necessary action.",

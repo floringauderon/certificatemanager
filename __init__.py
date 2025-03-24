@@ -22,7 +22,7 @@ login_manager.login_view = 'login'
 # SendGrid API key
 SENDGRID_API_KEY = os.getenv('SENDGRID_API_KEY')
 
-from . import models  # Import models first, before routes
+from . import models
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -32,7 +32,7 @@ def load_user(user_id):
 def inject_now():
     return {'now': datetime.datetime.now()}
 
-from . import routes  # Import routes after db and app creation.
+from . import routes
 
 if __name__ == '__main__':
     app.run(debug=True)
