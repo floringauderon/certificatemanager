@@ -6,7 +6,7 @@ import re
 
 def password_complexity(form, field):
     """Validator for password complexity."""
-    pattern = re.compile(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$")
+    pattern = re.compile(r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$") # Check the password to this regex pattern
     if not pattern.match(field.data):
         raise ValidationError(
             "The Password has to be at least 8 digets long and needs"
