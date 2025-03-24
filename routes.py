@@ -110,10 +110,12 @@ def next_cert_to_expire():
     next_cert = models.Certificate.query.order_by(models.Certificate.valid_to_date.asc()).first()
 
     if next_cert:
+        user = models.User.query.get(next_cert.user_id)
         cert_data = {
             'id': next_cert.id,
-            'valid_to_date': next_cert.valid_to_date.isoformat(),
             'user_id': next_cert.user_id,
+            'user_email': user.email,
+            'valid_to_date': next_cert.valid_to_date.isoformat(),
         }
         return jsonify(cert_data)
     else:
