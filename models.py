@@ -4,19 +4,19 @@ from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 
-class User(UserMixin, db.Model):
+class User(UserMixin, db.Model): # user table
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(128), unique=True, nullable=False)
     password_hash = db.Column(db.String(256))
-    certificates = db.relationship('Certificate', backref='user', lazy=True)
+    certificates = db.relationship('Certificate', backref='user', lazy=True) # relationship to table certificate
 
     def set_password(self, password):
-        self.password_hash = generate_password_hash(password, method='pbkdf2:sha256', salt_length=16)
+        self.password_hash = generate_password_hash(password, method='pbkdf2:sha256', salt_length=16) # Generate hash and salt
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-class Certificate(db.Model):
+class Certificate(db.Model): # certificate table
     id = db.Column(db.Integer, primary_key=True)
     common_name = db.Column(db.String(200))
     creation_date = db.Column(db.Date)

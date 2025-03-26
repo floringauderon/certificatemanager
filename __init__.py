@@ -8,7 +8,7 @@ import datetime
 import sendgrid
 from sendgrid.helpers.mail import Mail
 
-load_dotenv()
+load_dotenv() # Load my .env file
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
